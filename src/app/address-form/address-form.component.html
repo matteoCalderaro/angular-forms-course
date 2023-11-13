@@ -6,7 +6,8 @@
 
         <input matInput
                placeholder="Address Line 1"
-               formControlName="addressLine1">
+               formControlName="addressLine1"
+               (blur)="onTouched()">
 
     </mat-form-field>
 
@@ -14,7 +15,8 @@
 
         <input matInput
                placeholder="Address Line 2"
-               formControlName="addressLine2">
+               formControlName="addressLine2"
+               (blur)="onTouched()">
 
     </mat-form-field>
 
@@ -22,7 +24,8 @@
 
         <input matInput
                placeholder="Zip Code"
-               formControlName="zipCode">
+               formControlName="zipCode"
+               (blur)="onTouched()">
 
     </mat-form-field>
 
@@ -30,9 +33,12 @@
 
         <input matInput
                placeholder="City"
-               formControlName="city">
+               formControlName="city"
+               (blur)="onTouched()">
 
     </mat-form-field>
+    
+  <mat-error *ngIf="form.controls['addressLine1'].errors?.required">{{bravo}}</mat-error>
 
     <div class="form-val">
 

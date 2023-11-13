@@ -1,0 +1,60 @@
+<div [formGroup]="form">
+  
+  <address-form legend="Address" formControlName="address"></address-form>
+  <mat-form-field >
+
+    <input matInput formControlName="title" placeholder="Course title" #title>
+
+    <mat-hint align="end">
+      {{title.value.length}} / 60
+    </mat-hint>
+    
+    <mat-error *ngIf="courseTitle.errors?.existingTitle">
+      The title is already being used
+    </mat-error>
+
+  </mat-form-field>
+
+  <mat-form-field>
+
+    <mat-select placeholder="Select category" formControlName="categorySelect">
+
+      <ng-container *ngFor="let category of (categories$ | async)">
+
+        <mat-option [value]="category.code">{{category.description}}</mat-option>
+
+      </ng-container>
+
+    </mat-select>
+
+  </mat-form-field>
+
+  
+  <mat-form-field>
+    
+    <input matInput placeholder="Release date" 
+      [matDatepicker]="releaseDatePicker"
+      formControlName="releasedAt">
+  
+    <mat-datepicker-toggle matSuffix [for]="releaseDatePicker"></mat-datepicker-toggle>
+  
+    <mat-datepicker #releaseDatePicker></mat-datepicker>
+    
+  </mat-form-field>
+
+  <mat-checkbox color="primary" formControlName="downloadAllowed">
+    Download allowed?
+  </mat-checkbox>
+
+  <mat-form-field appearance="outline">
+
+    <textarea matInput placeholder="Description" formControlName="longDescription">
+
+    </textarea>
+
+  </mat-form-field>
+
+  <div class="form-val">{{ form.value | json}}</div>
+  <div class="form-val">Form Validuty : {{ form.valid}}</div>
+  {{form.controls['address'].errors |json}}
+</div>

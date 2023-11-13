@@ -1,26 +1,67 @@
 <mat-card class="login-page">
-  <mat-card-title>Login</mat-card-title>
+  <mat-card-title>Login (Template Driven)</mat-card-title>
   <mat-card-content>
 
-    <form class="login-form data-form">
+    <form class="login-form data-form" #loginForm="ngForm"
+    (ngSubmit)="login(loginForm,$event)">
 
-      <mat-form-field>
+      <mat-form-field >
 
         <input matInput type="email" name="email"
-               placeholder="Email">
+               placeholder="Email"  
+               [ngModel]="val.email" 
+               [ngModelOptions]="{updateOn:'change'}"
+               (ngModelChange)="onEmailChange($event)"
+               #email="ngModel"
+               required 
+               minlength="3">
+        <mat-error>The Email is mandatory</mat-error>
 
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field >
 
-        <input matInput type="password" placeholder="Password">
-
+        <input matInput type="password" name="password"
+              placeholder="Password"
+              ngModel 
+              [ngModelOptions]="{updateOn:'change'}"
+              (ngModelChange)="onEmailChange($event)"
+              ngModel 
+              #password="ngModel"
+              required 
+              minlength="8"
+              passwordStrength > 
+        
+        <mat-error *ngIf="password.errors?.required">
+          The password is required
+        </mat-error>
+    
       </mat-form-field>
+      <ng-container 
+        *ngIf="password.errors | onlyOneError : ['minlength','passwordStrength'] as error">
+        
+        <div class="field-message" *ngIf="error.minlength">
+          Your password has to have minimun {{error.minlength.requiredLength}} but it has 
+          only {{error.minlength.actualLength}}
+        </div>
+        <div class="field-message"  *ngIf="error.passwordStrength">
+          Your password must have lower case, upper case and numerical characters
+        </div>
+        
+      </ng-container>
+      
 
-      <button mat-raised-button color="primary">
-        Login
+      <button mat-raised-button color="primary" type="submit"
+          [disabled]="!loginForm.valid" >
+          Login
       </button>
-
+      
+      <div>{{ 'email valid: ' + email.valid }}</div>
+      <div>{{ 'email errors: ' + (email.errors | json) }}</div>
+      <div>{{ 'email value: ' + (email.value | json) }}</div>
+      <div>{{  'password valid: ' + (password.valid | json)}}</div>
+      <div>{{  'password errors: ' + (password.errors | json)}}</div>
+      <div>{{ 'password value: ' + password.value}}</div>
     </form>
 
   </mat-card-content>

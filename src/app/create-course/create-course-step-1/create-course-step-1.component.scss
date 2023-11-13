@@ -2,8 +2,15 @@
 
 mat-form-field {
   display: block;
+  
+
 }
 
 textarea {
-  max-height: 20px;
+  max-height: 40px;
+}
+
+
+::ng-deep.mat-mdc-text-field-wrapper {
+  background-color: white !important;
 }
